@@ -1,0 +1,5 @@
+# Use the official Jupyter PySpark notebook as the base image
+FROM jupyter/pyspark-notebook:latest
+
+# Install delta-spark
+RUN pip install delta-spark deltalake

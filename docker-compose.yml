@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  delta:
+    image: deltaio/delta-docker:latest
+    container_name: delta-lake
+    environment:
+      - DELTA_LOG_STORE_TYPE=hdfs
+    volumes:
+      - ./data/delta:/data
+    networks:
+      - deltanet
+    ports:
+      - "9000:9000"
+
+  jupyterlab:
+    build:
+      context: .
+      dockerfile: Dockerfile.jupyter
+    container_name: jupyter-lab
+    environment:
+      - JUPYTER_ENABLE_LAB=yes
+    volumes:
+      - ./notebooks:/home/jovyan/work
+      - ./data/delta:/data
+    ports:
+      - "8888:8888"
+    networks:
+      - deltanet
+    depends_on:
+      - delta
+
+networks:
+  deltanet:
+    driver: bridge

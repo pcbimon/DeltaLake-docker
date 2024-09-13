@@ -1,0 +1,5 @@
+/data
+**/tmp/*
+**/temp
+**/temp/*
+**/.ipynb_checkpoints
